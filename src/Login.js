@@ -21,6 +21,8 @@ const Login = () => {
 
   return (
     <Container className="my-5">
+      {/* Adaugă titlul aplicației */}
+      <h1 className="text-center mb-4">Delivery App</h1>
       <h2>Logare</h2>
       {error && <Alert variant="danger">{error}</Alert>}
       <Form onSubmit={handleLogin}>
