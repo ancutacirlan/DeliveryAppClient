@@ -24,11 +24,11 @@ const Subscriptions = () => {
 
     try {
       await renewSubscription(renewalPayload); 
-      alert('Abonamentul a fost achiziționat cu succes!');
+      alert('Subscription purchased successfully!');
       window.location.reload();
 
     } catch (error) {
-      alert('A apărut o eroare la achiziționarea abonamentului.');
+      alert('An error occurred while purchasing the subscription.');
     }
   };
 
@@ -40,7 +40,7 @@ const Subscriptions = () => {
         console.log("Available subscriptions:", data);
         setSubscriptions(data);
       } catch (err) {
-        setError(`Eroare la fetchSubscriptions: ${err.message}`);
+        setError(`Error fetching subscriptions: ${err.message}`);
         console.error("Error fetching available subscriptions:", err);
       }
     };
@@ -60,7 +60,7 @@ const Subscriptions = () => {
         console.log("Has active PREMIUM or GOLD subscription:", activePremiumOrGold);
         setHasActivePremiumOrGold(activePremiumOrGold);
       } catch (err) {
-        setError(`Eroare la fetchMySubscriptions: ${err.message}`);
+        setError(`Error fetching my subscriptions: ${err.message}`);
         console.error("Error fetching my subscriptions:", err);
       } finally {
         setLoading(false); 
@@ -81,14 +81,14 @@ const Subscriptions = () => {
 
   return (
     <Container>
-      <h2>Abonamente Disponibile</h2>
+      <h2>Available Subscriptions</h2>
       {subscriptions.map((subscription) => (
         <Card key={subscription.id} className="mb-3">
           <Card.Body>
             <Card.Title>{formatSubscriptionName(subscription.name)}</Card.Title>
             <Card.Text>{subscription.description}</Card.Text>
-            <Card.Text>Pret: {subscription.price} Lei</Card.Text>
-            <Card.Text>Tip: {subscription.typeSubscription}</Card.Text>
+            <Card.Text>Price: {subscription.price} Lei</Card.Text>
+            <Card.Text>Type: {subscription.typeSubscription}</Card.Text>
 
             {(subscription.typeSubscription === 'ANNUAL' || subscription.typeSubscription === 'MONTHLY') && (
               <Button
@@ -99,7 +99,7 @@ const Subscriptions = () => {
                   (subscription.name === 'PREMIUM_PLAN' || subscription.name === 'GOLD_PLAN')
                 }
               >
-                Achiziționează abonamentul
+                Purchase Subscription
               </Button>
             )}
           </Card.Body>

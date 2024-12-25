@@ -21,7 +21,7 @@ export const login = async (email, password) => {
     localStorage.setItem('user', JSON.stringify({ email, password })); 
     return response.data;
   } catch (error) {
-    throw new Error('Logare eșuată');
+    throw new Error('Login failed');
   }
 };
 
@@ -30,7 +30,7 @@ export const register = async (name, email, password, address) => {
     const response = await axios.post(`${API_URL}/auth/signup`, { name, email, password, address });
     return response.data;
   } catch (error) {
-    throw new Error('Înregistrare eșuată');
+    throw new Error('Registration failed');
   }
 };
 
@@ -39,7 +39,7 @@ export const fetchRestaurants = async () => {
     const response = await axios.get(`${API_URL}/menu/grouping/by/restaurant`, getAuthHeaders());
     return response.data;
   } catch (error) {
-    throw new Error('Eroare la încărcarea restaurantelor');
+    throw new Error('Error loading restaurants');
   }
 };
 
@@ -48,7 +48,7 @@ export const placeOrder = async (orderPayload) => {
     const response = await axios.post(`${API_URL}/order`, orderPayload, getAuthHeaders());
     return response.data;
   } catch (error) {
-    throw new Error('Eroare la plasarea comenzii');
+    throw new Error('Error placing the order');
   }
 };
 
@@ -57,7 +57,7 @@ export const fetchSubscriptions = async () => {
     const response = await axios.get(`${API_URL}/subscription`, getAuthHeaders());
     return response.data;
   } catch (error) {
-    throw new Error('Eroare la încărcarea abonamentelor');
+    throw new Error('Error loading subscriptions');
   }
 };
 
@@ -66,7 +66,7 @@ export const fetchMySubscriptions = async () => {
     const response = await axios.get(`${API_URL}/user/subscription`, getAuthHeaders());
     return response.data;
   } catch (error) {
-    throw new Error('Eroare la încărcarea abonamentelor.');
+    throw new Error('Error loading subscriptions');
   }
 };
 
@@ -75,7 +75,7 @@ export const renewSubscription = async (renewalPayload) => {
     const response = await axios.post(`${API_URL}/user/subscription`, renewalPayload, getAuthHeaders());
     return response.data;
   } catch (error) {
-    throw new Error('Nu s-a putut reînnoi abonamentul.');
+    throw new Error('Could not renew subscription');
   }
 };
 
@@ -89,15 +89,11 @@ export const calculateTotalPrice = async (orderItems) => {
   }
 };
 
-
-
 export const deleteSubscription = async (id) => {
   try {
-    const response = await axios.delete(`${API_URL}/user/subscription/id/${id}`,getAuthHeaders);
+    const response = await axios.delete(`${API_URL}/user/subscription/id/${id}`, getAuthHeaders());
     return response.data;
   } catch (err) {
-    throw new Error('Nu s-a putut șterge abonamentul.');
+    throw new Error('Could not delete subscription');
   }
 };
-
-

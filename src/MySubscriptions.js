@@ -46,26 +46,26 @@ const MySubscriptions = () => {
 
     try {
       await renewSubscription(renewalPayload);
-      alert('Abonamentul a fost reînnoit cu succes!');
+      alert('The subscription has been successfully renewed!');
       window.location.reload();
 
       const data = await fetchMySubscriptions();
       setSubscriptions(data);
     } catch (err) {
-      alert('A apărut o eroare la reînnoirea abonamentului.');
+      alert('An error occurred while renewing the subscription.');
     }
   };
 
   const handleDeleteSubscription = async (id) => {
     try {
       await deleteSubscription(id);
-      alert('Abonamentul a fost șters cu succes!');
+      alert('The subscription has been successfully deleted!');
       window.location.reload();
 
       const data = await fetchMySubscriptions();
       setSubscriptions(data);
     } catch (err) {
-      alert('A apărut o eroare la ștergerea abonamentului.');
+      alert('An error occurred while deleting the subscription.');
     }
   };
 
@@ -101,9 +101,9 @@ const MySubscriptions = () => {
 
   return (
     <Container>
-      <h2>Abonamentele mele</h2>
+      <h2>My Subscriptions</h2>
       {subscriptions.length === 0 ? (
-        <Alert variant="info">Nu ai niciun abonament activ.</Alert>
+        <Alert variant="info">You have no active subscriptions.</Alert>
       ) : (
         subscriptions.map((subscription) => (
           <Card
@@ -112,10 +112,9 @@ const MySubscriptions = () => {
             style={isExpiringSoon(subscription.endDate) ? { border: '2px solid red' } : {}}
           >
             <Card.Body>
-              
               <Card.Title>{formatSubscriptionName(subscription.subscription)}</Card.Title>
-              <Card.Text>Data începerii: {new Date(subscription.startDate).toLocaleDateString()}</Card.Text>
-              <Card.Text>Data expirării: {new Date(subscription.endDate).toLocaleDateString()}</Card.Text>
+              <Card.Text>Start Date: {new Date(subscription.startDate).toLocaleDateString()}</Card.Text>
+              <Card.Text>End Date: {new Date(subscription.endDate).toLocaleDateString()}</Card.Text>
 
               <Button
                 variant="primary"
@@ -123,14 +122,14 @@ const MySubscriptions = () => {
                 className="me-2"
                 disabled={hasActiveSubscriptionOfSameType(subscription) || isSingleActiveSubscription()}
               >
-                Reînnoiește abonamentul
+                Renew Subscription
               </Button>
 
               <Button
                 variant="danger"
                 onClick={() => handleDeleteSubscription(subscription.id)}
               >
-                Șterge abonamentul
+                Delete Subscription
               </Button>
             </Card.Body>
           </Card>
@@ -141,4 +140,3 @@ const MySubscriptions = () => {
 };
 
 export default MySubscriptions;
-

@@ -40,15 +40,15 @@ const HomePage = () => {
         if (expiringSubscription && !hasActiveSubscription(data, expiringSubscription)) {
           setAlertMessage(
             <Alert variant="warning" className="d-flex justify-content-between align-items-center">
-              <span>Abonamentul "{formatSubscriptionName(expiringSubscription.subscription)}" expiră în curând!</span>
-              <Button variant="link" onClick={() => setKey('mySubscriptions')}>Reînnoiește</Button>
+              <span>The subscription "{formatSubscriptionName(expiringSubscription.subscription)}" is about to expire!</span>
+              <Button variant="link" onClick={() => setKey('mySubscriptions')}>Renew</Button>
             </Alert>
           );
         } else {
           setAlertMessage(null);
         }
       } catch (error) {
-        console.error('Eroare la încărcarea abonamentelor:', error);
+        console.error('Error loading subscriptions:', error);
       }
     };
 
@@ -67,13 +67,13 @@ const HomePage = () => {
         onSelect={(k) => setKey(k)} 
         className="mb-3"
       >
-        <Tab eventKey="restaurants" title="Restaurante">
+        <Tab eventKey="restaurants" title="Restaurants">
           <Restaurants />
         </Tab>
-        <Tab eventKey="subscriptions" title="Abonamente">
+        <Tab eventKey="subscriptions" title="Subscriptions">
           <Subscriptions />
         </Tab>
-        <Tab eventKey="mySubscriptions" title="Abonamentele mele">
+        <Tab eventKey="mySubscriptions" title="My Subscriptions">
           <MySubscriptions />
         </Tab>
       </Tabs>

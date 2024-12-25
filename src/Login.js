@@ -21,31 +21,31 @@ const Login = () => {
 
   return (
     <Container className="my-5">
-      {/* Adaugă titlul aplicației */}
+      {/* Add the application title */}
       <h1 className="text-center mb-4">Delivery App</h1>
-      <h2>Logare</h2>
+      <h2>Login</h2>
       {error && <Alert variant="danger">{error}</Alert>}
       <Form onSubmit={handleLogin}>
         <Form.Group controlId="formEmail">
           <Form.Label>Email</Form.Label>
           <Form.Control
             type="email"
-            placeholder="Introdu email-ul"
+            placeholder="Enter your email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
         </Form.Group>
         <Form.Group controlId="formPassword">
-          <Form.Label>Parolă</Form.Label>
+          <Form.Label>Password</Form.Label>
           <Form.Control
             type="password"
-            placeholder="Introdu parola"
+            placeholder="Enter your password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
         </Form.Group>
         <Button variant="primary" type="submit">
-          Logare
+          Login
         </Button>
       </Form>
     </Container>

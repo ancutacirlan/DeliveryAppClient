@@ -15,7 +15,7 @@ const Register = () => {
     e.preventDefault();
     try {
       await register(name, email, password, address);
-      navigate.push('/login'); 
+      navigate('/login'); 
     } catch (err) {
       setError(err.message);
     }
@@ -23,14 +23,14 @@ const Register = () => {
 
   return (
     <Container className="my-5">
-      <h2>Înregistrare</h2>
+      <h2>Register</h2>
       {error && <Alert variant="danger">{error}</Alert>}
       <Form onSubmit={handleRegister}>
         <Form.Group controlId="formName">
-          <Form.Label>Nume</Form.Label>
+          <Form.Label>Name</Form.Label>
           <Form.Control
             type="text"
-            placeholder="Introdu numele"
+            placeholder="Enter your name"
             value={name}
             onChange={(e) => setName(e.target.value)}
           />
@@ -39,31 +39,31 @@ const Register = () => {
           <Form.Label>Email</Form.Label>
           <Form.Control
             type="email"
-            placeholder="Introdu email-ul"
+            placeholder="Enter your email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
         </Form.Group>
         <Form.Group controlId="formPassword">
-          <Form.Label>Parolă</Form.Label>
+          <Form.Label>Password</Form.Label>
           <Form.Control
             type="password"
-            placeholder="Introdu parola"
+            placeholder="Enter your password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
         </Form.Group>
         <Form.Group controlId="formAddress">
-          <Form.Label>Adresă</Form.Label>
+          <Form.Label>Address</Form.Label>
           <Form.Control
             type="text"
-            placeholder="Introdu adresa"
+            placeholder="Enter your address"
             value={address}
             onChange={(e) => setAddress(e.target.value)}
           />
         </Form.Group>
         <Button variant="primary" type="submit">
-          Înregistrează-te
+          Register
         </Button>
       </Form>
     </Container>

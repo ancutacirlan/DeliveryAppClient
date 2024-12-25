@@ -90,12 +90,12 @@ const Restaurants = () => {
 
     try {
       await placeOrder(orderPayload);
-      alert('Comanda a fost plasată cu succes!');
+      alert('Order placed successfully!');
       setCart([]);
       setMentions('');
       setTotalData({ productsPrice: 0, transportPrice: 0, totalPrice: 0 }); 
     } catch (err) {
-      alert('A apărut o eroare la plasarea comenzii.');
+      alert('An error occurred while placing the order.');
     }
   };
 
@@ -109,7 +109,7 @@ const Restaurants = () => {
 
   return (
     <Container>
-      <h2>Restaurante</h2>
+      <h2>Restaurants</h2>
       <Accordion defaultActiveKey="0">
         {restaurants.map((restaurant, index) => (
           <Accordion.Item eventKey={index.toString()} key={restaurant.restaurantDto.id}>
@@ -119,10 +119,10 @@ const Restaurants = () => {
                 <Card key={menu.id} className="mb-3">
                   <Card.Body>
                     <Card.Title>{menu.name}</Card.Title>
-                    <Card.Text>Pret: {menu.price} Lei</Card.Text>
-                    <Card.Text>Disponibilitate: {menu.isAvailable ? 'Disponibil' : 'Indisponibil'}</Card.Text>
+                    <Card.Text>Price: {menu.price} Lei</Card.Text>
+                    <Card.Text>Availability: {menu.isAvailable ? 'Available' : 'Unavailable'}</Card.Text>
                     <Card.Text>
-                      Ingrediente: {menu.ingredients.length > 0
+                      Ingredients: {menu.ingredients.length > 0
                         ? menu.ingredients.map((ing) => ing.name).join(', ')
                         : 'N/A'}
                     </Card.Text>
@@ -136,7 +136,7 @@ const Restaurants = () => {
                         }}
                       >
                         <Form.Group controlId={`quantity-${menu.id}`} className="d-flex align-items-center">
-                          <Form.Label className="me-2 mb-0">Cantitate:</Form.Label>
+                          <Form.Label className="me-2 mb-0">Quantity:</Form.Label>
                           <Form.Control
                             type="number"
                             name="quantity"
@@ -147,7 +147,7 @@ const Restaurants = () => {
                           />
                         </Form.Group>
                         <Button type="submit" variant="primary" className="mt-2">
-                          Adauga in cos
+                          Add to cart
                         </Button>
                       </Form>
                     )}
@@ -159,41 +159,41 @@ const Restaurants = () => {
         ))}
       </Accordion>
 
-      <h3 className="mt-5">Cos de cumparaturi</h3>
+      <h3 className="mt-5">Shopping Cart</h3>
       {cart.length === 0 ? (
-        <Alert variant="info">Cosul este gol.</Alert>
+        <Alert variant="info">The cart is empty.</Alert>
       ) : (
         <div>
           {cart.map((item) => (
             <Card key={item.id} className="mb-3">
               <Card.Body>
                 <Card.Title>{item.name}</Card.Title>
-                <Card.Text>Pret: {item.price} Lei</Card.Text>
-                <Card.Text>Cantitate: {item.quantity}</Card.Text>
-                <Button variant="danger" onClick={() => handleRemoveFromCart(item.id)}>Elimina</Button>
+                <Card.Text>Price: {item.price} Lei</Card.Text>
+                <Card.Text>Quantity: {item.quantity}</Card.Text>
+                <Button variant="danger" onClick={() => handleRemoveFromCart(item.id)}>Remove</Button>
               </Card.Body>
             </Card>
           ))}
 
           <Form.Group controlId="mentions" className="mt-4">
-            <Form.Label>Mentiuni:</Form.Label>
+            <Form.Label>Notes:</Form.Label>
             <Form.Control
               as="textarea"
               rows={3}
               value={mentions}
               onChange={(e) => setMentions(e.target.value)}
-              placeholder="Adauga mentiuni pentru comanda ta"
+              placeholder="Add notes for your order"
             />
           </Form.Group>
 
           <Alert variant="info" className="mt-3">
-            <p>Preț produse: {totalData.productsPrice.toFixed(2)} Lei</p>
-            <p>Preț transport: {totalData.transportPrice.toFixed(2)} Lei</p>
-            <p>Total comandă: {totalData.totalPrice.toFixed(2)} Lei</p>
+            <p>Products price: {totalData.productsPrice.toFixed(2)} Lei</p>
+            <p>Transport price: {totalData.transportPrice.toFixed(2)} Lei</p>
+            <p>Total price: {totalData.totalPrice.toFixed(2)} Lei</p>
           </Alert>
 
           <Button variant="success" className="mt-3" onClick={handlePlaceOrder}>
-            Plaseaza comanda
+            Place Order
           </Button>
         </div>
       )}
