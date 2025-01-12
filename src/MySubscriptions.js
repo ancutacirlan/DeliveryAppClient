@@ -1,5 +1,6 @@
+// MySubscriptions.js
 import React, { useEffect, useState } from 'react';
-import { fetchMySubscriptions, renewSubscription, deleteSubscription } from './api'; 
+import { fetchMySubscriptions, renewSubscription, deleteSubscription, setSubscriptionToExpire } from './api'; 
 import { Container, Card, Spinner, Alert, Button } from 'react-bootstrap';
 import './MySubscriptions.css'; 
 
@@ -69,6 +70,17 @@ const MySubscriptions = () => {
     }
   };
 
+  const handleSetToExpire = async (id) => {
+    try {
+      await setSubscriptionToExpire(id);
+      alert('The subscription has been successfully set to expire!');
+      const data = await fetchMySubscriptions();
+      setSubscriptions(data);
+    } catch (err) {
+      alert('An error occurred while setting the subscription to expire.');
+    }
+  };
+
   const isExpiringSoon = (endDate) => {
     const today = new Date();
     const expirationDate = new Date(endDate);
@@ -128,8 +140,16 @@ const MySubscriptions = () => {
               <Button
                 variant="danger"
                 onClick={() => handleDeleteSubscription(subscription.id)}
+                className="me-2"
               >
                 Delete Subscription
+              </Button>
+
+              <Button
+                variant="warning"
+                onClick={() => handleSetToExpire(subscription.id)}
+              >
+                Set to Expire
               </Button>
             </Card.Body>
           </Card>

@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-//const API_URL = 'http://localhost:8080/api';
-const API_URL = 'https://deliveryappserver-production.up.railway.app/api';
+const API_URL = 'http://localhost:8080/api';
+//const API_URL = 'https://deliveryappserver-production.up.railway.app/api';
 
 
 
@@ -48,7 +48,8 @@ export const fetchRestaurants = async () => {
 
 export const placeOrder = async (orderPayload) => {
   try {
-    const response = await axios.post(`${API_URL}/order`, orderPayload, getAuthHeaders());
+    const response = await axios.post(`${API_URL}/order`,
+       orderPayload, getAuthHeaders());
     return response.data;
   } catch (error) {
     throw new Error('Error placing the order');
@@ -98,5 +99,14 @@ export const deleteSubscription = async (id) => {
     return response.data;
   } catch (err) {
     throw new Error('Could not delete subscription');
+  }
+};
+
+export const setSubscriptionToExpire = async (id) => {
+  try {
+    const response = await axios.put(`${API_URL}/user/subscription/set/to/expire/${id}`, null, getAuthHeaders());
+    return response.data;
+  } catch (err) {
+    throw new Error('Could not set subscription to expire');
   }
 };

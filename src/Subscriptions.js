@@ -13,13 +13,21 @@ const Subscriptions = () => {
     return name.replace(/_/g, ' ');
   };
 
-  const handlePurchaseSubscription = async (subscriptionId) => {
+  const handlePurchaseSubscription = async (subscriptionId, subscriptionType) => {
+
+    const startDate = new Date();
+    let endDate = new Date(startDate);
+  
+    // Setarea datei de sfârșit în funcție de tipul abonamentului
+    if (subscriptionType === 'ANNUAL') {
+      endDate.setFullYear(endDate.getFullYear() + 1); // GOLD: +1 an
+    } else if (subscriptionType === 'MONTHLY') {
+      endDate.setMonth(endDate.getMonth() + 1); // PREMIUM: +1 lună
+    }
     const renewalPayload = {
       subscriptionId: subscriptionId,
-      startDate: new Date().toISOString().split('T')[0], 
-      endDate: new Date(new Date().setFullYear(new Date().getFullYear() + 1)) 
-        .toISOString()
-        .split('T')[0],
+      startDate: startDate, 
+      endDate: endDate,
     };
 
     try {
@@ -93,7 +101,7 @@ const Subscriptions = () => {
             {(subscription.typeSubscription === 'ANNUAL' || subscription.typeSubscription === 'MONTHLY') && (
               <Button
                 variant="primary"
-                onClick={() => handlePurchaseSubscription(subscription.id)}
+                onClick={() => handlePurchaseSubscription(subscription.id,subscription.typeSubscription)}
                 disabled={
                   hasActivePremiumOrGold && 
                   (subscription.name === 'PREMIUM_PLAN' || subscription.name === 'GOLD_PLAN')

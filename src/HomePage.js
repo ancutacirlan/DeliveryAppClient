@@ -34,10 +34,28 @@ const HomePage = () => {
       try {
         const data = await fetchMySubscriptions();
         setSubscriptions(data);
-
-        const expiringSubscription = data.find((subscription) => isExpiringSoon(subscription.endDate));
-
-        if (expiringSubscription && !hasActiveSubscription(data, expiringSubscription)) {
+  
+        const today = new Date();
+  
+        const expiringSubscription = data.find((subscription) => {
+          const expirationDate = new Date(subscription.endDate);
+          const diffDays = Math.ceil((expirationDate - today) / (1000 * 60 * 60 * 24));
+          return diffDays <= 3 && diffDays >= 0; // Se apropie de expirare
+        });
+  
+        const expiredSubscription = data.find((subscription) => {
+          const expirationDate = new Date(subscription.endDate);
+          return expirationDate < today; // Este deja expirat
+        });
+  
+        if (expiredSubscription) {
+          setAlertMessage(
+            <Alert variant="danger" className="d-flex justify-content-between align-items-center">
+              <span>The subscription "{formatSubscriptionName(expiredSubscription.subscription)}" has expired!</span>
+              <Button variant="link" onClick={() => setKey('mySubscriptions')}>Renew</Button>
+            </Alert>
+          );
+        } else if (expiringSubscription && !hasActiveSubscription(data, expiringSubscription)) {
           setAlertMessage(
             <Alert variant="warning" className="d-flex justify-content-between align-items-center">
               <span>The subscription "{formatSubscriptionName(expiringSubscription.subscription)}" is about to expire!</span>
@@ -51,9 +69,10 @@ const HomePage = () => {
         console.error('Error loading subscriptions:', error);
       }
     };
-
+  
     loadSubscriptions();
   }, []); 
+  
 
   return (
     <Container>
